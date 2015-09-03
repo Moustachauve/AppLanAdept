@@ -1,8 +1,7 @@
 package ca.cgagnier.lanadept.models;
 
-public class Place {
+public class Place extends GenericModel {
 
-    public Long id;
     public int numero;
     public PlaceSection placeSection;
 

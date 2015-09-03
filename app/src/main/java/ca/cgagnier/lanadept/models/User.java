@@ -2,9 +2,8 @@ package ca.cgagnier.lanadept.models;
 
 import org.joda.time.DateTime;
 
-public class User {
+public class User extends GenericModel {
 
-    public Long id;
     public String nomComplet;
     public String email;
     public String password;
