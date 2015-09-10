@@ -5,7 +5,7 @@ import java.util.List;
 public interface IGenericRepository<T> {
 
     public List<T> getAll();
-    public T getById(Long id);
+    public T getById(long id);
     public long save(T obj);
     public void deleteAll();
 

@@ -20,7 +20,7 @@ public abstract class GenericRepository<T extends GenericModel> implements IGene
     }
 
     @Override
-    public T getById(Long id) {
+    public T getById(long id) {
         for(T record : listRecord) {
             if(record.id == id) {
                 return record;
@@ -32,12 +32,23 @@ public abstract class GenericRepository<T extends GenericModel> implements IGene
 
     @Override
     public long save(T obj) {
-        return -1;
+        if(obj == null)
+            throw new NullPointerException();
+
+        if(obj.id == null) {
+            listRecord.add(obj);
+            obj.id = (long)listRecord.size();
+            return obj.id;
+        }
+        else {
+            listRecord.set(obj.id.intValue(), obj);
+            return obj.id;
+        }
     }
 
     @Override
     public void deleteAll() {
-
+        listRecord = new ArrayList<>();
     }
 
 //    @Override

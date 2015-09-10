@@ -8,7 +8,7 @@ import ca.cgagnier.lanadept.models.Lan;
 
 public class GenericRepositoryTest extends AndroidTestCase {
 
-    GenericRepository<Lan> genRepo;
+    IGenericRepository<Lan> genRepo;
 
     @Override
     protected void setUp() throws Exception {
@@ -31,7 +31,7 @@ public class GenericRepositoryTest extends AndroidTestCase {
         lan.emplacementGoogleMap = "popi";
         lan.dateDebut = new DateTime(2015, 5, 13, 10, 10);
         genRepo.save(lan);
-        assertEquals(genRepo.getAll().size(), 1);
+        assertEquals(1, genRepo.getAll().size());
     }
 
     public void testGetById() {
@@ -42,7 +42,7 @@ public class GenericRepositoryTest extends AndroidTestCase {
         Long idTested = genRepo.save(lan);
 
         Lan recov = genRepo.getById(idTested);
-        assertEquals(recov.dateDebut, new DateTime(2015, 5, 13, 10, 10));
+        assertEquals(new DateTime(2015, 5, 13, 10, 10), recov.dateDebut);
     }
 
 
@@ -60,7 +60,18 @@ public class GenericRepositoryTest extends AndroidTestCase {
 
         genRepo.deleteAll();
 
-        assertEquals(genRepo.getAll().size(), 0);
+        assertEquals(0, genRepo.getAll().size());
+    }
+
+    public void testSaveVide() {
+        try {
+            genRepo.save(null);
+            fail();
+        }
+        catch (NullPointerException ex)
+        {
+            assertEquals(0, genRepo.getAll().size());
+        }
     }
 
 //    public void testSaveManyAndGetAll() {
