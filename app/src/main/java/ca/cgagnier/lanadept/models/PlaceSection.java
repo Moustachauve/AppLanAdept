@@ -4,4 +4,5 @@ public class PlaceSection extends GenericModel {
 
     public String Nom;
 
+
 }
