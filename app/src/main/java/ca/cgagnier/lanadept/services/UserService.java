@@ -22,7 +22,7 @@ public class UserService implements IUserService {
     private UserService() {}
 
     //endregion
-    
+
     @Override
     public User login(String email, String password) throws UserAlreadyLoggedInException, InvalidLoginException {
         return null;
