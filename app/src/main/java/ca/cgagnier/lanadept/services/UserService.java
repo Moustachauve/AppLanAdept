@@ -1,6 +1,7 @@
 package ca.cgagnier.lanadept.services;
 
 import ca.cgagnier.lanadept.models.User;
+import ca.cgagnier.lanadept.repositories.UserRepository;
 import ca.cgagnier.lanadept.services.exceptions.InvalidEmailException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidLoginException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidPasswordException;
@@ -8,6 +9,8 @@ import ca.cgagnier.lanadept.services.exceptions.UserAlreadyLoggedInException;
 import ca.cgagnier.lanadept.services.exceptions.UserNotLoggedInException;
 
 public class UserService implements IUserService {
+
+    UserRepository userRepo = new UserRepository();
 
     //region Singleton things
 
