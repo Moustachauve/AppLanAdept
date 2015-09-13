@@ -5,9 +5,6 @@ import java.util.List;
 
 import ca.cgagnier.lanadept.models.GenericModel;
 
-/**
- * Created by 1349423 on 2015-09-03.
- */
 public abstract class GenericRepository<T extends GenericModel> implements IGenericRepository<T> {
 
     public List<T> listRecord = new ArrayList<>();
@@ -41,9 +38,15 @@ public abstract class GenericRepository<T extends GenericModel> implements IGene
             return obj.id;
         }
         else {
-            listRecord.set(obj.id.intValue(), obj);
-            return obj.id;
+            for(T record : listRecord) {
+                if(record.id == obj.id) {
+                    listRecord.set(record.id.intValue(), obj);
+                    return obj.id;
+                }
+            }
         }
+
+        throw new NullPointerException(); //TODO: Remplacer par mon exception
     }
 
     @Override

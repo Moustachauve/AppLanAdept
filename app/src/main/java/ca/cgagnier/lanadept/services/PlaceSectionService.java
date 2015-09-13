@@ -7,12 +7,16 @@ import ca.cgagnier.lanadept.models.Place;
 public class PlaceSectionService implements IPlaceSectionService {
 
     //region Singleton things
-    private PlaceSectionService current;
+    private static PlaceSectionService current;
 
-    public PlaceSectionService getCurrent() {
+    public static PlaceSectionService getCurrent() {
         if(current == null)
             current = new PlaceSectionService();
         return current;
+    }
+
+    static void reset() {
+        current = null;
     }
 
     private PlaceSectionService() {}

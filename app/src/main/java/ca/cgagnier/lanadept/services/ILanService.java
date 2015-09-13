@@ -3,6 +3,7 @@ package ca.cgagnier.lanadept.services;
 import java.util.List;
 
 import ca.cgagnier.lanadept.models.Lan;
+import ca.cgagnier.lanadept.services.exceptions.NoLanInFutureException;
 
 public interface ILanService {
 
@@ -12,5 +13,5 @@ public interface ILanService {
 
     public Lan getSelectedLan();
 
-    public Lan getNextLan();
+    public Lan getClosestNextLan() throws NoLanInFutureException;
 }

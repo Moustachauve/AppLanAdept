@@ -11,12 +11,16 @@ public class UserService implements IUserService {
 
     //region Singleton things
 
-    private UserService current;
+    private static UserService current;
 
-    public UserService getCurrent() {
+    public static UserService getCurrent() {
         if(current == null)
             current = new UserService();
         return current;
+    }
+
+    static void reset() {
+        current = null;
     }
 
     private UserService() {}

@@ -9,12 +9,16 @@ public class ReservationService implements IReservationService {
 
     //region Singleton things
 
-    private ReservationService current;
+    private static ReservationService current;
 
-    public ReservationService getCurrent() {
+    public static ReservationService getCurrent() {
         if(current == null)
             current = new ReservationService();
         return current;
+    }
+
+    static void reset() {
+        current = null;
     }
 
     private ReservationService() {}

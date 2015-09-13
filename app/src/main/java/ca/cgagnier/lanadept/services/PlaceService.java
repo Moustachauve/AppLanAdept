@@ -6,12 +6,16 @@ public class PlaceService implements IPlaceService {
 
     //region Singleton things
 
-    private PlaceService current;
+    private static PlaceService current;
 
-    public PlaceService getCurrent() {
+    public static PlaceService getCurrent() {
         if(current == null)
             current = new PlaceService();
         return current;
+    }
+
+    static void reset() {
+        current = null;
     }
 
     private PlaceService() {}
