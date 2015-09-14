@@ -3,20 +3,12 @@ package ca.cgagnier.lanadept.services;
 import android.test.AndroidTestCase;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeUtils;
-import org.joda.time.Days;
-import org.joda.time.Months;
-import org.joda.time.Years;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import ca.cgagnier.lanadept.models.Lan;
-import ca.cgagnier.lanadept.models.PlaceSection;
 import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
-import ca.cgagnier.lanadept.services.exceptions.InvalidIdException;
 import ca.cgagnier.lanadept.services.exceptions.NoLanInFutureException;
 
 public class LanServiceTest extends AndroidTestCase {

@@ -12,7 +12,6 @@ import ca.cgagnier.lanadept.models.Place;
 import ca.cgagnier.lanadept.models.PlaceSection;
 import ca.cgagnier.lanadept.models.Reservation;
 import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
-import ca.cgagnier.lanadept.services.exceptions.InvalidIdException;
 import ca.cgagnier.lanadept.services.exceptions.PlaceReservedException;
 
 public class PlaceServiceTest extends AndroidTestCase {
@@ -42,7 +41,7 @@ public class PlaceServiceTest extends AndroidTestCase {
         sectionTest.placeList = null;
     }
 
-    public void testAddAndGetById() throws InvalidIdException { //long id
+    public void testAddAndGetById() { //long id
         Place place = placeService.addToSection(sectionTest);
 
         assertEquals(1, sectionTest.placeList.size());

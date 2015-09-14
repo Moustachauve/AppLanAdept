@@ -11,6 +11,7 @@ import ca.cgagnier.lanadept.models.Place;
 import ca.cgagnier.lanadept.models.PlaceSection;
 import ca.cgagnier.lanadept.models.Reservation;
 import ca.cgagnier.lanadept.models.User;
+import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
 import ca.cgagnier.lanadept.services.exceptions.PlaceReservedException;
 import ca.cgagnier.lanadept.services.exceptions.TooManyReservationException;
 
@@ -110,8 +111,40 @@ public class ReservationServiceTest extends AndroidTestCase {
         catch (TooManyReservationException ex) {}
     }
 
+    public void testCancel() throws Exception { //Reservation reservation
+        UserService userService = UserService.getCurrent();
 
-    public void testCancel() { //Reservation reservation
-        fail();
+        User user = userService.register("a@b.c", "abc123", "abc123", "testing user");
+
+        Place place = PlaceService.getCurrent().addToSection(sectionTest);
+        Reservation reservation = reservationService.reserve(user, place);
+
+        reservationService.cancel(reservation);
+
+        assertNull(place.reservation);
+    }
+
+    public void testCancelNull() throws Exception { //Reservation reservation
+        try {
+            reservationService.cancel(null);
+            fail();
+        }
+        catch (NullPointerException ex) {}
+    }
+
+    public void testCancelReservationFake() throws Exception { //Reservation reservation
+        User user = UserService.getCurrent().register("a@b.c", "abc123", "abc123", "testing user");
+        Place place = PlaceService.getCurrent().addToSection(sectionTest);
+
+        Reservation reservationFake = new Reservation();
+        reservationFake.id = 145612l;
+        reservationFake.user = user;
+        reservationFake.place = place;
+
+        try {
+            reservationService.cancel(reservationFake);
+            fail();
+        }
+        catch (NotFoundException ex) {}
     }
 }

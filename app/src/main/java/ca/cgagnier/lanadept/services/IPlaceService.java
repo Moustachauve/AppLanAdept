@@ -4,7 +4,6 @@ import java.util.List;
 
 import ca.cgagnier.lanadept.models.Place;
 import ca.cgagnier.lanadept.models.PlaceSection;
-import ca.cgagnier.lanadept.services.exceptions.InvalidIdException;
 import ca.cgagnier.lanadept.services.exceptions.PlaceReservedException;
 
 public interface IPlaceService {

@@ -48,6 +48,7 @@ public class PlaceSectionService implements IPlaceSectionService {
         PlaceSection placeSection = new PlaceSection();
         placeSection.placeList = new LinkedList<>();
         placeSection.name = name;
+        placeSection.lan = lan;
 
         placeSectionRepo.save(placeSection);
 

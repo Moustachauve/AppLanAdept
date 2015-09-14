@@ -7,6 +7,5 @@ public class Reservation extends GenericModel {
     public Place place;
     public User user;
     public DateTime dateReservation;
-    public DateTime dateAnnulation;
 
 }
