@@ -17,23 +17,13 @@ public class PlaceSectionServiceTest extends AndroidTestCase {
     PlaceSectionService sectionService;
     Lan testingLan;
 
-    public PlaceSectionServiceTest() {
-        LanService.getCurrent().lanRepo.deleteAll();
-
-        testingLan = new Lan();
-        testingLan.startingDate = DateTime.now();
-        testingLan.positionMap = "ici";
-        testingLan.position = "Là";
-
-        LanService.getCurrent().lanRepo.save(testingLan);
-    }
-
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         sectionService = PlaceSectionService.getCurrent();
         sectionService.placeSectionRepo.deleteAll();
-        testingLan.sections = new LinkedList<>();
+
+        testingLan = LanService.getCurrent().create(DateTime.now(), "ici", "là");
     }
 
     @Override
@@ -42,20 +32,28 @@ public class PlaceSectionServiceTest extends AndroidTestCase {
         sectionService.placeSectionRepo.deleteAll();
         sectionService.reset();
         sectionService = null;
-        testingLan.sections = null;
     }
 
     public void testCreateAndGetAllSection() throws Exception {
         Random rand = new Random(4242421);
         int nbSections = 12;
 
-        assertEquals(0, sectionService.getAllSection());
+        assertEquals(0, sectionService.getAllSection().size());
 
         for(int i = 0; i < nbSections; i++) {
             sectionService.create(testingLan, "Test_" + rand.nextInt(1000));
         }
 
-        assertEquals(nbSections, sectionService.getAllSection());
+        assertEquals(nbSections, sectionService.getAllSection().size());
+        assertEquals(nbSections, testingLan.sections.size());
+
+        String name = "test_section_correct";
+        PlaceSection sectionTest = sectionService.create(testingLan, name);
+
+        assertNotNull(sectionTest);
+        assertNotNull(sectionTest.placeList);
+        assertNotNull(sectionTest.id);
+        assertEquals(name, sectionTest.name);
     }
 
     public void testCreateLanNull() throws Exception {
@@ -91,19 +89,19 @@ public class PlaceSectionServiceTest extends AndroidTestCase {
         PlaceSection section = sectionService.create(testingLan, "Test_Update_part1");
 
         String newName = "Test_Update_part2";
-        section.nom = newName;
+        section.name = newName;
         sectionService.update(section);
 
         PlaceSection sectionChercher = sectionService.placeSectionRepo.getById(section.id);
 
-        assertEquals(newName, sectionChercher.nom);
+        assertEquals(newName, sectionChercher.name);
     }
 
     public void testUpdateInexistant() throws Exception {
         try {
             PlaceSection fakeSection = new PlaceSection();
             fakeSection.id = 1525l;
-            fakeSection.nom = "Test_Fakesection";
+            fakeSection.name = "Test_Fakesection";
             fakeSection.placeList = new LinkedList<>();
 
             sectionService.update(fakeSection);
@@ -130,7 +128,7 @@ public class PlaceSectionServiceTest extends AndroidTestCase {
         try {
             PlaceSection fakeSection = new PlaceSection();
             fakeSection.id = 1525l;
-            fakeSection.nom = "Test_Fakesection";
+            fakeSection.name = "Test_Fakesection";
             fakeSection.placeList = new LinkedList<>();
 
             sectionService.delete(fakeSection);

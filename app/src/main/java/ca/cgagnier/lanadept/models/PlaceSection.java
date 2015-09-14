@@ -4,7 +4,7 @@ import java.util.List;
 
 public class PlaceSection extends GenericModel {
 
-    public String nom;
+    public String name;
     public List<Place> placeList;
 
 }

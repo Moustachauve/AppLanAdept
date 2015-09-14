@@ -55,7 +55,7 @@ public class ReservationServiceTest extends AndroidTestCase {
 
     public void testReserveNullUser() throws PlaceReservedException, TooManyReservationException { //User user, Place place
         PlaceSection section = new PlaceSection();
-        section.nom = "TEST";
+        section.name = "TEST";
 
         Place place = new Place();
         place.numero = 1;
@@ -112,5 +112,6 @@ public class ReservationServiceTest extends AndroidTestCase {
 
 
     public void testCancel() { //Reservation reservation
+        fail();
     }
 }

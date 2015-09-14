@@ -1,9 +1,11 @@
 package ca.cgagnier.lanadept.services;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import ca.cgagnier.lanadept.models.Lan;
 import ca.cgagnier.lanadept.models.PlaceSection;
+import ca.cgagnier.lanadept.repositories.LanRepository;
 import ca.cgagnier.lanadept.repositories.PlaceSectionRepository;
 import ca.cgagnier.lanadept.services.exceptions.InvalidNameException;
 
@@ -30,12 +32,27 @@ public class PlaceSectionService implements IPlaceSectionService {
 
     @Override
     public List<PlaceSection> getAllSection() {
-        return null;
+        return placeSectionRepo.getAll();
     }
 
     @Override
     public PlaceSection create(Lan lan, String name) throws InvalidNameException {
-        return null;
+        if(lan == null || name == null)
+            throw new NullPointerException();
+
+        if(name.trim().length() == 0)
+            throw new InvalidNameException();
+
+        PlaceSection placeSection = new PlaceSection();
+        placeSection.placeList = new LinkedList<>();
+        placeSection.name = name;
+
+        placeSectionRepo.save(placeSection);
+
+        lan.sections.add(placeSection);
+        LanService.getCurrent().update(lan);
+
+        return placeSection;
     }
 
     @Override
