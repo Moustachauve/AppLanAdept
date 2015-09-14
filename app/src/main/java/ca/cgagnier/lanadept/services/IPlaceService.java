@@ -3,17 +3,17 @@ package ca.cgagnier.lanadept.services;
 import java.util.List;
 
 import ca.cgagnier.lanadept.models.Place;
+import ca.cgagnier.lanadept.models.PlaceSection;
 import ca.cgagnier.lanadept.services.exceptions.InvalidIdException;
+import ca.cgagnier.lanadept.services.exceptions.PlaceReservedException;
 
 public interface IPlaceService {
 
     public Place getById(long id) throws InvalidIdException;
 
-    public long save(Place place);
+    public Place addToSection(PlaceSection section);
 
-    public void saveMany(List<Place> places);
-
-    public void delete(Place place);
+    public void removeFromSection(PlaceSection section) throws PlaceReservedException;
 
     public void deleteMany(List<Place> places);
 }

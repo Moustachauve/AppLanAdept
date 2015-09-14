@@ -3,10 +3,13 @@ package ca.cgagnier.lanadept.services;
 import ca.cgagnier.lanadept.models.Place;
 import ca.cgagnier.lanadept.models.Reservation;
 import ca.cgagnier.lanadept.models.User;
-import ca.cgagnier.lanadept.services.exceptions.AlreadyReservedException;
+import ca.cgagnier.lanadept.repositories.ReservationRepository;
+import ca.cgagnier.lanadept.services.exceptions.PlaceReservedException;
 import ca.cgagnier.lanadept.services.exceptions.TooManyReservationException;
 
 public class ReservationService implements IReservationService {
+
+    ReservationRepository reservationRepo = new ReservationRepository();
 
     //region Singleton things
 
@@ -27,7 +30,7 @@ public class ReservationService implements IReservationService {
     //endregion
 
     @Override
-    public Reservation reserve(User user, Place place) throws AlreadyReservedException, TooManyReservationException {
+    public Reservation reserve(User user, Place place) throws PlaceReservedException, TooManyReservationException {
         return null;
     }
 

@@ -52,6 +52,11 @@ public class LanService implements ILanService {
     }
 
     @Override
+    public Lan create(DateTime dateDebut, String emplacement, String emplacementGoogleMaps) {
+        return null;
+    }
+
+    @Override
     public Lan getClosestNextLan() throws NoLanInFutureException {
         List<Lan> lans = getAllLans();
         int bestDaysBetween = Integer.MAX_VALUE;

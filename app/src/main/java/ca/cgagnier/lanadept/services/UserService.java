@@ -3,7 +3,9 @@ package ca.cgagnier.lanadept.services;
 import ca.cgagnier.lanadept.models.User;
 import ca.cgagnier.lanadept.repositories.UserRepository;
 import ca.cgagnier.lanadept.services.exceptions.InvalidEmailException;
+import ca.cgagnier.lanadept.services.exceptions.InvalidNameException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidLoginException;
+import ca.cgagnier.lanadept.services.exceptions.InvalidPasswordConfirmationException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidPasswordException;
 import ca.cgagnier.lanadept.services.exceptions.UserAlreadyLoggedInException;
 import ca.cgagnier.lanadept.services.exceptions.UserNotLoggedInException;
@@ -41,7 +43,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User register(String email, String password, String passwordConfirmation, String fullName) throws InvalidEmailException, InvalidPasswordException {
+    public User register(String email, String password, String passwordConfirmation, String fullName)
+            throws InvalidEmailException, InvalidPasswordException, InvalidPasswordConfirmationException, InvalidNameException {
         return null;
     }
 

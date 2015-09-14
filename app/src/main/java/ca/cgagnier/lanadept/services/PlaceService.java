@@ -3,8 +3,14 @@ package ca.cgagnier.lanadept.services;
 import java.util.List;
 
 import ca.cgagnier.lanadept.models.Place;
+import ca.cgagnier.lanadept.models.PlaceSection;
+import ca.cgagnier.lanadept.repositories.PlaceRepository;
+import ca.cgagnier.lanadept.services.exceptions.InvalidIdException;
+import ca.cgagnier.lanadept.services.exceptions.PlaceReservedException;
 
 public class PlaceService implements IPlaceService {
+
+    PlaceRepository placeRepo = new PlaceRepository();
 
     //region Singleton things
 
@@ -25,22 +31,17 @@ public class PlaceService implements IPlaceService {
     //endregion
 
     @Override
-    public Place getById(long id) {
+    public Place getById(long id) throws InvalidIdException {
         return null;
     }
 
     @Override
-    public long save(Place place) {
-        return 0;
+    public Place addToSection(PlaceSection section) {
+        return null;
     }
 
     @Override
-    public void saveMany(List<Place> places) {
-
-    }
-
-    @Override
-    public void delete(Place place) {
+    public void removeFromSection(PlaceSection section) throws PlaceReservedException {
 
     }
 
@@ -48,4 +49,5 @@ public class PlaceService implements IPlaceService {
     public void deleteMany(List<Place> places) {
 
     }
+
 }

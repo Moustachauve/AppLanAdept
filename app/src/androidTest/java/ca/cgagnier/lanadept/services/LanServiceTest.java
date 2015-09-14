@@ -72,6 +72,10 @@ public class LanServiceTest extends AndroidTestCase {
         {}
     }
 
+    public void testCreate() {
+        fail();
+    }
+
     private Lan createTestLan() {
         Random rand = new Random(424242);
 

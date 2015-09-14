@@ -6,10 +6,10 @@ import java.util.List;
 
 public class User extends GenericModel {
 
-    public String nomComplet;
+    public String fullName;
     public String email;
     public String password;
     public DateTime dateInscription;
-    public List<Reservation> reservation;
+    public List<Reservation> reservations;
 
 }

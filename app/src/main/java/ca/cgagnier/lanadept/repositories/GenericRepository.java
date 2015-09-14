@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.cgagnier.lanadept.models.GenericModel;
+import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
 
 public abstract class GenericRepository<T extends GenericModel> implements IGenericRepository<T> {
 
@@ -24,7 +25,7 @@ public abstract class GenericRepository<T extends GenericModel> implements IGene
             }
         }
 
-        return null;
+        throw new NotFoundException();
     }
 
     @Override
@@ -46,7 +47,7 @@ public abstract class GenericRepository<T extends GenericModel> implements IGene
             }
         }
 
-        throw new NullPointerException(); //TODO: Remplacer par mon exception
+        throw new NotFoundException();
     }
 
     @Override

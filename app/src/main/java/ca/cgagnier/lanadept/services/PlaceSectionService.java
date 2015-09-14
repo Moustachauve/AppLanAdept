@@ -2,8 +2,10 @@ package ca.cgagnier.lanadept.services;
 
 import java.util.List;
 
+import ca.cgagnier.lanadept.models.Lan;
 import ca.cgagnier.lanadept.models.PlaceSection;
 import ca.cgagnier.lanadept.repositories.PlaceSectionRepository;
+import ca.cgagnier.lanadept.services.exceptions.InvalidNameException;
 
 public class PlaceSectionService implements IPlaceSectionService {
 
@@ -28,16 +30,22 @@ public class PlaceSectionService implements IPlaceSectionService {
 
     @Override
     public List<PlaceSection> getAllSection() {
-        return placeSectionRepo.getAll();
+        return null;
     }
 
     @Override
-    public long save(PlaceSection placeSection) {
-        return 0;
+    public PlaceSection create(Lan lan, String name) throws InvalidNameException {
+        return null;
     }
 
     @Override
-    public void delete(PlaceSection placeSection) {
+    public void update(PlaceSection section) throws InvalidNameException {
 
     }
+
+    @Override
+    public void delete(PlaceSection section) {
+
+    }
+
 }
