@@ -5,13 +5,15 @@ import java.util.List;
 
 import ca.cgagnier.lanadept.models.Lan;
 import ca.cgagnier.lanadept.models.PlaceSection;
+import ca.cgagnier.lanadept.repositories.IPlaceSectionRepository;
 import ca.cgagnier.lanadept.repositories.LanRepository;
 import ca.cgagnier.lanadept.repositories.PlaceSectionRepository;
+import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidNameException;
 
 public class PlaceSectionService implements IPlaceSectionService {
 
-    PlaceSectionRepository placeSectionRepo = new PlaceSectionRepository();
+    IPlaceSectionRepository placeSectionRepo = new PlaceSectionRepository();
 
     //region Singleton things
     private static PlaceSectionService current;
@@ -57,12 +59,19 @@ public class PlaceSectionService implements IPlaceSectionService {
 
     @Override
     public void update(PlaceSection section) throws InvalidNameException {
+        if(section.id == null)
+            throw new NotFoundException();
 
+        placeSectionRepo.save(section);
     }
 
     @Override
     public void delete(PlaceSection section) {
+        if(section.id == null)
+            throw new NotFoundException();
 
+        placeSectionRepo.delete(section);
+        PlaceService.getCurrent().deleteMany(section.placeList);
     }
 
 }

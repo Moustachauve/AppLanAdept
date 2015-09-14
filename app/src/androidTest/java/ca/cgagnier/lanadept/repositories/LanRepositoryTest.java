@@ -71,6 +71,4 @@ public class LanRepositoryTest extends AndroidTestCase {
         }
         catch (NotFoundException ex) {}
     }
-
-
 }

@@ -10,6 +10,8 @@ import java.util.List;
 import ca.cgagnier.lanadept.models.Lan;
 import ca.cgagnier.lanadept.models.Place;
 import ca.cgagnier.lanadept.models.PlaceSection;
+import ca.cgagnier.lanadept.models.Reservation;
+import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidIdException;
 import ca.cgagnier.lanadept.services.exceptions.PlaceReservedException;
 
@@ -52,12 +54,12 @@ public class PlaceServiceTest extends AndroidTestCase {
         assertEquals(place.id, place2.id);
     }
 
-    public void testGetByIdInvalidId() throws InvalidIdException { //long id
+    public void testGetByIdInvalidId() { //long id
         try {
             placeService.getById(126536362);
             fail();
         }
-        catch (InvalidIdException ex) {}
+        catch (NotFoundException ex) {}
     }
 
     public void testAddToSectionNull() { //PlaceSection section
@@ -85,6 +87,20 @@ public class PlaceServiceTest extends AndroidTestCase {
             fail();
         }
         catch (NullPointerException ex) {}
+    }
+
+    public void testRemoveFromSectionReserved() {
+        placeService.addToSection(sectionTest);
+        placeService.addToSection(sectionTest);
+        Place place = placeService.addToSection(sectionTest);
+
+        place.reservation = new Reservation();
+
+        try {
+            placeService.removeFromSection(sectionTest);
+            fail();
+        }
+        catch (PlaceReservedException ex) {}
     }
 
     public void testDeleteMany() { //List<Place> places

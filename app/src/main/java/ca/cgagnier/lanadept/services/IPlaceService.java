@@ -9,7 +9,7 @@ import ca.cgagnier.lanadept.services.exceptions.PlaceReservedException;
 
 public interface IPlaceService {
 
-    public Place getById(long id) throws InvalidIdException;
+    public Place getById(long id);
 
     public Place addToSection(PlaceSection section);
 

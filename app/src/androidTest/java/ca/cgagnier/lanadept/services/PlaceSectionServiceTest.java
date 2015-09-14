@@ -97,6 +97,14 @@ public class PlaceSectionServiceTest extends AndroidTestCase {
         assertEquals(newName, sectionChercher.name);
     }
 
+    public void testUpdateNull() throws Exception {
+        try {
+            sectionService.update(null);
+            fail();
+        }
+        catch (NullPointerException ex) {}
+    }
+
     public void testUpdateInexistant() throws Exception {
         try {
             PlaceSection fakeSection = new PlaceSection();
@@ -122,6 +130,14 @@ public class PlaceSectionServiceTest extends AndroidTestCase {
             fail();
         }
         catch (NotFoundException ex) {}
+    }
+
+    public void testDeleteNull() throws Exception {
+        try {
+            sectionService.delete(null);
+            fail();
+        }
+        catch (NullPointerException ex) {}
     }
 
     public void testDeleteInexistant() throws Exception {

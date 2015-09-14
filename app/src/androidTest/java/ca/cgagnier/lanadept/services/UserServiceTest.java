@@ -2,12 +2,15 @@ package ca.cgagnier.lanadept.services;
 
 import android.test.AndroidTestCase;
 
+import java.nio.channels.AlreadyConnectedException;
+
 import ca.cgagnier.lanadept.models.User;
 import ca.cgagnier.lanadept.services.exceptions.InvalidEmailException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidNameException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidLoginException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidPasswordConfirmationException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidPasswordException;
+import ca.cgagnier.lanadept.services.exceptions.UserAlreadyLoggedInException;
 import ca.cgagnier.lanadept.services.exceptions.UserNotLoggedInException;
 
 public class UserServiceTest extends AndroidTestCase {
@@ -47,7 +50,7 @@ public class UserServiceTest extends AndroidTestCase {
     }
 
     public void testRegisterSpecialCharacters() throws Exception {
-        String email = "a_b-c.d+e!#$%&'*éé漢字仮@def.ghi";
+        String email = "a_b-c.d@def.ghi";
         String password = "a_b-c.d+e!#$%&'*éé漢字仮";
         String fullName = "a_b-c.d+e!#$ %&'*éé漢字仮";
         User regUser = userService.register(email, password, password, fullName);
@@ -213,13 +216,20 @@ public class UserServiceTest extends AndroidTestCase {
         }
     }
 
-    public void testLoginInvalidEmail() throws Exception
+    public void testLoginAlreadyLoggedIn() throws Exception
     {
+        String email = "abc@def.ghi";
+        String password = "abcd1234";
+        String fullName = "Pipo Popi";
+        User regUser = userService.register(email, password, password, fullName);
+
+        userService.login(email, password);
+
         try {
-            User regUser = userService.register("invalidEmail.ca", "abcdefg", "abcdefg", "Jean Pol");
+            userService.login(email, password);
             fail();
         }
-        catch (InvalidEmailException ex) {}
+        catch (UserAlreadyLoggedInException ex) {}
     }
 
 
