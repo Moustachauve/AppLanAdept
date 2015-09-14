@@ -6,14 +6,14 @@ import java.util.List;
 
 public class Lan extends GenericModel implements Comparable<Lan> {
 
-    public DateTime dateDebut;
-    public String emplacement;
-    public String emplacementGoogleMap;
+    public DateTime startingDate;
+    public String position;
+    public String positionMap;
     public List<PlaceSection> sections;
 
 
     @Override
     public int compareTo(Lan compareTo) {
-        return dateDebut.compareTo(compareTo.dateDebut);
+        return startingDate.compareTo(compareTo.startingDate);
     }
 }

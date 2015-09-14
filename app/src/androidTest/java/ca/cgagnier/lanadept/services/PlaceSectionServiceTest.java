@@ -5,12 +5,9 @@ import android.test.AndroidTestCase;
 import org.joda.time.DateTime;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
-import java.util.ServiceConfigurationError;
 
 import ca.cgagnier.lanadept.models.Lan;
-import ca.cgagnier.lanadept.models.Place;
 import ca.cgagnier.lanadept.models.PlaceSection;
 import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidNameException;
@@ -24,9 +21,9 @@ public class PlaceSectionServiceTest extends AndroidTestCase {
         LanService.getCurrent().lanRepo.deleteAll();
 
         testingLan = new Lan();
-        testingLan.dateDebut = DateTime.now();
-        testingLan.emplacementGoogleMap = "ici";
-        testingLan.emplacement = "Là";
+        testingLan.startingDate = DateTime.now();
+        testingLan.positionMap = "ici";
+        testingLan.position = "Là";
 
         LanService.getCurrent().lanRepo.save(testingLan);
     }
@@ -102,6 +99,20 @@ public class PlaceSectionServiceTest extends AndroidTestCase {
         assertEquals(newName, sectionChercher.nom);
     }
 
+    public void testUpdateInexistant() throws Exception {
+        try {
+            PlaceSection fakeSection = new PlaceSection();
+            fakeSection.id = 1525l;
+            fakeSection.nom = "Test_Fakesection";
+            fakeSection.placeList = new LinkedList<>();
+
+            sectionService.update(fakeSection);
+            fail();
+        }
+        catch (NotFoundException ex) {}
+    }
+
+
     public void testDelete() throws Exception {
 
         PlaceSection section = sectionService.create(testingLan, "Test_Delete");
@@ -110,6 +121,19 @@ public class PlaceSectionServiceTest extends AndroidTestCase {
 
         try {
             sectionService.placeSectionRepo.getById(section.id);
+            fail();
+        }
+        catch (NotFoundException ex) {}
+    }
+
+    public void testDeleteInexistant() throws Exception {
+        try {
+            PlaceSection fakeSection = new PlaceSection();
+            fakeSection.id = 1525l;
+            fakeSection.nom = "Test_Fakesection";
+            fakeSection.placeList = new LinkedList<>();
+
+            sectionService.delete(fakeSection);
             fail();
         }
         catch (NotFoundException ex) {}

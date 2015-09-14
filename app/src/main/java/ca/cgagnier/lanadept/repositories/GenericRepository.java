@@ -9,6 +9,7 @@ import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
 public abstract class GenericRepository<T extends GenericModel> implements IGenericRepository<T> {
 
     public List<T> listRecord = new ArrayList<>();
+    private long currentId = 1;
 
     @Override
     public List<T> getAll() {
@@ -33,15 +34,17 @@ public abstract class GenericRepository<T extends GenericModel> implements IGene
         if(obj == null)
             throw new NullPointerException();
 
-        if(obj.id == null) {
+        if(obj.id == null) {    //Insert
             listRecord.add(obj);
-            obj.id = (long)listRecord.size();
+            obj.id = currentId;
+            currentId++;
             return obj.id;
         }
-        else {
-            for(T record : listRecord) {
+        else {                  //Update
+            for(int i = 0; i < listRecord.size(); i++) {
+                T record = listRecord.get(i);
                 if(record.id == obj.id) {
-                    listRecord.set(record.id.intValue(), obj);
+                    listRecord.set(i, obj);
                     return obj.id;
                 }
             }

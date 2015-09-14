@@ -3,11 +3,12 @@ package ca.cgagnier.lanadept.services;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import ca.cgagnier.lanadept.models.Lan;
 import ca.cgagnier.lanadept.repositories.LanRepository;
+import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
 import ca.cgagnier.lanadept.services.exceptions.NoLanInFutureException;
 
 public class LanService implements ILanService {
@@ -52,8 +53,40 @@ public class LanService implements ILanService {
     }
 
     @Override
-    public Lan create(DateTime dateDebut, String emplacement, String emplacementGoogleMaps) {
-        return null;
+    public Lan create(DateTime startingDate, String position, String positionMap)  {
+        if(startingDate == null || position == null || positionMap == null)
+            throw new NullPointerException();
+
+        Lan lan = new Lan();
+        lan.startingDate = startingDate;
+        lan.position = position;
+        lan.positionMap = positionMap;
+        lan.sections = new LinkedList<>();
+
+        lanRepo.save(lan);
+
+        return lan;
+    }
+
+    @Override
+    public Lan getById(long id) throws NotFoundException {
+        return lanRepo.getById(id);
+    }
+
+    @Override
+    public void update(Lan lan) {
+        if(lan.id == null)
+            throw new NotFoundException();
+
+        lanRepo.save(lan);
+    }
+
+    @Override
+    public void delete(Lan lan) {
+        if(lan.id == null)
+            throw new NotFoundException();
+
+        lanRepo.delete(lan);
     }
 
     @Override
@@ -66,8 +99,8 @@ public class LanService implements ILanService {
 
         for(Lan currentLan : lans)
         {
-            if(currentLan.dateDebut.isAfter(today)) {
-                int daysBetween = Days.daysBetween(currentLan.dateDebut, today).getDays() + 1;
+            if(currentLan.startingDate.isAfter(today)) {
+                int daysBetween = Days.daysBetween(currentLan.startingDate, today).getDays() + 1;
                 if (daysBetween < bestDaysBetween) {
                     bestDaysBetween = daysBetween;
                     closestLan = currentLan;

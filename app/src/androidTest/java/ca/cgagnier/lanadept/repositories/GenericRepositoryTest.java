@@ -5,6 +5,7 @@ import android.test.AndroidTestCase;
 import org.joda.time.DateTime;
 
 import ca.cgagnier.lanadept.models.Lan;
+import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
 
 public class GenericRepositoryTest extends AndroidTestCase {
 
@@ -27,33 +28,40 @@ public class GenericRepositoryTest extends AndroidTestCase {
 
     public void testSaveAndGetAll() {
         Lan lan = new Lan();
-        lan.emplacement = "pipo";
-        lan.emplacementGoogleMap = "popi";
-        lan.dateDebut = new DateTime(2015, 5, 13, 10, 10);
+        lan.position = "pipo";
+        lan.positionMap = "popi";
+        lan.startingDate = new DateTime(2015, 5, 13, 10, 10);
         genRepo.save(lan);
         assertEquals(1, genRepo.getAll().size());
     }
 
     public void testGetById() {
         Lan lan = new Lan();
-        lan.emplacement = "pipo";
-        lan.emplacementGoogleMap = "popi";
-        lan.dateDebut = new DateTime(2015, 5, 13, 10, 10);
+        lan.position = "pipo";
+        lan.positionMap = "popi";
+        lan.startingDate = new DateTime(2015, 5, 13, 10, 10);
         Long idTested = genRepo.save(lan);
 
         Lan recov = genRepo.getById(idTested);
-        assertEquals(new DateTime(2015, 5, 13, 10, 10), recov.dateDebut);
+        assertEquals(new DateTime(2015, 5, 13, 10, 10), recov.startingDate);
     }
 
+    public void testGetByIdNotFound() {
+        try {
+            genRepo.getById(12512525l);
+            fail();
+        }
+        catch (NotFoundException ex) {}
+    }
 
     public void testDeleteAll() {
         int size = 20;
 
         for(int i = 0; i < size; i++) {
             Lan lan = new Lan();
-            lan.emplacement = "pipo";
-            lan.emplacementGoogleMap = "popi";
-            lan.dateDebut = new DateTime(2015, 5, 13, 10, 10);
+            lan.position = "pipo";
+            lan.positionMap = "popi";
+            lan.startingDate = new DateTime(2015, 5, 13, 10, 10);
 
             genRepo.save(lan);
         }
@@ -80,9 +88,9 @@ public class GenericRepositoryTest extends AndroidTestCase {
 //
 //        for(int i = 0; i < size; i++) {
 //            Lan lan = new Lan();
-//            lan.emplacement = "pipo";
-//            lan.emplacementGoogleMap = "popi";
-//            lan.dateDebut = new DateTime(2015, 5, 13, 10, 10);
+//            lan.position = "pipo";
+//            lan.positionMap = "popi";
+//            lan.startingDate = new DateTime(2015, 5, 13, 10, 10);
 //
 //            lans.add(lan);
 //        }
