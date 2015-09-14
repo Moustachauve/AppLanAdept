@@ -38,7 +38,7 @@ public interface ILanService {
     public Lan create(DateTime startingDate, String position, String positionMap);
 
     /**
-     * Search a Lan by it's Id
+     * Search a Lan by its Id
      * @param id
      * @return the Lan found
      * @throws NotFoundException
