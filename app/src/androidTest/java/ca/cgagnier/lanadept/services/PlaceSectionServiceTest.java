@@ -34,17 +34,17 @@ public class PlaceSectionServiceTest extends AndroidTestCase {
         sectionService = null;
     }
 
-    public void testCreateAndGetAllSection() throws Exception {
+    public void testCreate() throws Exception {
         Random rand = new Random(4242421);
         int nbSections = 12;
 
-        assertEquals(0, sectionService.getAllSection().size());
+        assertEquals(0, sectionService.placeSectionRepo.getAll().size());
 
         for(int i = 0; i < nbSections; i++) {
             sectionService.create(testingLan, "Test_" + rand.nextInt(1000));
         }
 
-        assertEquals(nbSections, sectionService.getAllSection().size());
+        assertEquals(nbSections, sectionService.placeSectionRepo.getAll().size());
         assertEquals(nbSections, testingLan.sections.size());
 
         String name = "test_section_correct";

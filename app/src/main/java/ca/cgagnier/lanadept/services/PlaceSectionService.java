@@ -33,11 +33,6 @@ public class PlaceSectionService implements IPlaceSectionService {
     //endregion
 
     @Override
-    public List<PlaceSection> getAllSection() {
-        return placeSectionRepo.getAll();
-    }
-
-    @Override
     public PlaceSection create(Lan lan, String name) throws InvalidNameException {
         if(lan == null || name == null)
             throw new NullPointerException();
