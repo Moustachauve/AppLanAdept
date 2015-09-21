@@ -1,5 +1,8 @@
 package ca.cgagnier.lanadept.repositories;
 
+import org.joda.time.DateTime;
+
+import java.util.LinkedList;
 import java.util.List;
 
 import ca.cgagnier.lanadept.models.User;
@@ -17,5 +20,17 @@ public class UserRepository extends GenericRepository<User> implements IUserRepo
         }
 
         throw new NotFoundException();
+    }
+
+    public UserRepository() {
+        User testUser = new User();
+
+        testUser.email = "to@to.to";
+        testUser.password = "toto";
+        testUser.dateInscription = DateTime.now();
+        testUser.fullName = "Je test";
+        testUser.reservations = new LinkedList<>();
+
+        listRecord.add(testUser);
     }
 }
