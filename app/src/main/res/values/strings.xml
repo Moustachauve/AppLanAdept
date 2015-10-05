@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">LanAdept</string>
 
-    <string name="menu_sign_in">Se connecter</string>
-    <string name="menu_sign_out">Se déconnecter</string>
+    <string name="menu_login">Se connecter</string>
+    <string name="menu_logout">Se déconnecter</string>
+    <string name="menu_register">S\'inscrire</string>
+
+    <string name="message_lan_started">Le LAN est débuté!</string>
 </resources>

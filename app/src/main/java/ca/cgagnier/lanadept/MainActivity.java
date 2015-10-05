@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem signIn = menu.findItem(R.id.menu_sign_in);
-        MenuItem signOut = menu.findItem(R.id.menu_sign_out);
+        MenuItem signIn = menu.findItem(R.id.menu_login);
+        MenuItem register = menu.findItem(R.id.menu_register);
+        MenuItem signOut = menu.findItem(R.id.menu_logout);
 
         signOut.setVisible(false);
 
@@ -59,9 +60,14 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.menu_sign_in) {
+        if (id == R.id.menu_login) {
             Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.menu_register) {
+            Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
             return true;
         }
@@ -77,21 +83,11 @@ public class MainActivity extends AppCompatActivity {
         mCountDownTimer = new CountDownTimer(mInitialTime, 1000) {
             @Override
             public void onFinish() {
-                //mTextView.setText(DateUtils.formatElapsedTime(0));
-                //mTextView.setText("Times Up!");
+                txtCountDownDate.setText(R.string.message_lan_started);
             }
 
             @Override
             public void onTick(long millisUntilFinished) {
-                //time.setLength(0);
-                // Use days if appropriate
-//                if(millisUntilFinished > DateUtils.DAY_IN_MILLIS) {
-//                    long count = millisUntilFinished / DateUtils.DAY_IN_MILLIS;
-//                    txtCountDownDays.setText(String.valueOf(count));
-//
-//                    millisUntilFinished %= DateUtils.DAY_IN_MILLIS;
-//                }
-
                 long seconds = (long)Math.floor(millisUntilFinished / 1000);
                 long minutes = (long)Math.floor(seconds / 60);
                 long hours = (long)Math.floor(minutes / 60);

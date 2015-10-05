@@ -4,37 +4,26 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build.VERSION;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import ca.cgagnier.lanadept.services.UserService;
 import ca.cgagnier.lanadept.services.exceptions.InvalidLoginException;
 import ca.cgagnier.lanadept.services.exceptions.UserAlreadyLoggedInException;
 
 
-public class LoginActivity extends Activity {
+public class RegisterActivity extends Activity {
 
     private UserLoginTask mAuthTask = null;
 
@@ -47,7 +36,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -57,7 +46,7 @@ public class LoginActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptRegister();
                     return true;
                 }
                 return false;
@@ -68,7 +57,7 @@ public class LoginActivity extends Activity {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptRegister();
             }
         });
 
@@ -76,13 +65,7 @@ public class LoginActivity extends Activity {
         mProgressView = findViewById(R.id.login_progress);
     }
 
-
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    public void attemptLogin() {
+    public void attemptRegister() {
         if (mAuthTask != null) {
             return;
         }
@@ -99,15 +82,25 @@ public class LoginActivity extends Activity {
         View focusView = null;
 
         // Check if the user entered a password.
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password.trim())) {
             mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+        else if(password.length() < 4) {
+            mPasswordView.setError(getString(R.string.error_password_too_short));
             focusView = mPasswordView;
             cancel = true;
         }
 
         // Check if the user entered an email.
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email.trim())) {
             mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        }
+        else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()) {
+            mEmailView.setError(getString(R.string.error_email_invalid));
             focusView = mEmailView;
             cancel = true;
         }
@@ -133,7 +126,7 @@ public class LoginActivity extends Activity {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+        if (VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);

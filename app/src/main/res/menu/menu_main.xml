@@ -1,8 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/menu_sign_in" android:title="@string/menu_sign_in"
+    <item android:id="@+id/menu_login" android:title="@string/menu_login"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/menu_sign_out" android:title="@string/menu_sign_out"
+    <item android:id="@+id/menu_register" android:title="@string/menu_register"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/menu_logout" android:title="@string/menu_logout"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
