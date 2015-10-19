@@ -15,4 +15,8 @@
     <string name="error_password_too_short">Le mot de passe est trop court</string>
     <string name="error_email_invalid">Le mot de passe est trop court</string>
     <string name="error_field_required">Ce champ est nécéssaire</string>
+
+    <string name="login_done">Vous êtes maintenant connecté.</string>
+    <string name="logout_done">Vous êtes maintenant déconnecté.</string>
+    <string name="register_done">Vous êtes maintenant inscrit. vous pouvez vous connecter.</string>
 </resources>

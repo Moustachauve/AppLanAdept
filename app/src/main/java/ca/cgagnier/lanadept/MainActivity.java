@@ -1,5 +1,6 @@
 package ca.cgagnier.lanadept;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
@@ -10,8 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
+
+import ca.cgagnier.lanadept.repositories.UserRepository;
+import ca.cgagnier.lanadept.services.UserService;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txtCountDownMins;
     TextView txtCountDownSecs;
     TextView txtCountDownDate;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +50,11 @@ public class MainActivity extends AppCompatActivity {
 ;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        this.menu = menu;
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem signIn = menu.findItem(R.id.menu_login);
-        MenuItem register = menu.findItem(R.id.menu_register);
-        MenuItem signOut = menu.findItem(R.id.menu_logout);
-
-        signOut.setVisible(false);
+        updateMenuVisibility();
 
         return true;
     }
@@ -72,6 +75,13 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.menu_register) {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivityForResult(intent, INTENT_REGISTER);
+            return true;
+        }
+
+        if(id == R.id.menu_logout) {
+            UserService.getCurrent().logout();
+            updateMenuVisibility();
+            Toast.makeText(getApplicationContext(), R.string.logout_done, Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -107,17 +117,37 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
     }
+
+    private void updateMenuVisibility() {
+        MenuItem signIn = menu.findItem(R.id.menu_login);
+        MenuItem register = menu.findItem(R.id.menu_register);
+        MenuItem signOut = menu.findItem(R.id.menu_logout);
+
+        boolean isLoggedIn = UserService.getCurrent().isUserLoggedIn();
+        signIn.setVisible(!isLoggedIn);
+        register.setVisible(!isLoggedIn);
+        signOut.setVisible(isLoggedIn);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
             case (INTENT_LOGIN) : {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
-                    // TODO Extract the data returned from the child Activity.
+                    Toast.makeText(getBaseContext(), R.string.login_done, Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            case (INTENT_REGISTER) : {
+                if (resultCode == AppCompatActivity.RESULT_OK) {
+                    Toast.makeText(getBaseContext(), R.string.register_done, Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
         }
+
+        updateMenuVisibility();
     }
 
 }
