@@ -16,6 +16,9 @@ import org.joda.time.DateTime;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final int INTENT_LOGIN = 1;
+    private final int INTENT_REGISTER = 2;
+
     TextView txtCountDownDays;
     TextView txtCountDownHours;
     TextView txtCountDownMins;
@@ -62,13 +65,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.menu_login) {
             Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, INTENT_LOGIN);
             return true;
         }
 
         if (id == R.id.menu_register) {
             Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, INTENT_REGISTER);
             return true;
         }
 
@@ -104,4 +107,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (INTENT_LOGIN) : {
+                if (resultCode == AppCompatActivity.RESULT_OK) {
+                    // TODO Extract the data returned from the child Activity.
+                }
+                break;
+            }
+        }
+    }
+
 }
