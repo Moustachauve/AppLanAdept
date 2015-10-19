@@ -38,6 +38,7 @@ public class ReservationServiceTest extends AndroidTestCase {
         super.tearDown();
         reservationService.reservationRepo.deleteAll();
         reservationService.reset();
+        UserService.reset();
         sectionTest.placeList = null;
     }
 

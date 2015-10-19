@@ -25,6 +25,7 @@ public class UserRepository extends GenericRepository<User> implements IUserRepo
     public UserRepository() {
         User testUser = new User();
 
+        testUser.id = 0l;
         testUser.email = "to@to.to";
         testUser.password = "toto";
         testUser.dateInscription = DateTime.now();

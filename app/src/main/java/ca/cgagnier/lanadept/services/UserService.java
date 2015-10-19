@@ -88,7 +88,7 @@ public class UserService implements IUserService {
         user.fullName = fullName;
         user.reservations = new LinkedList<>();
 
-        userRepo.save(user);
+        user.id = userRepo.save(user);
 
         return user;
     }
