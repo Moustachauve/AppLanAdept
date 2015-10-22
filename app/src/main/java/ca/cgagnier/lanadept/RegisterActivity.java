@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -197,6 +198,7 @@ public class RegisterActivity extends Activity {
             showProgress(false);
 
             if (success) {
+                setResult(AppCompatActivity.RESULT_OK);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
