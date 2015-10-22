@@ -3,6 +3,8 @@ package ca.cgagnier.lanadept;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     TextView txtCountDownDate;
     Menu menu;
 
+    NavigationView drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
 
         setTimer(new DateTime(2015, 10, 14, 12, 0));
         txtCountDownDate.setText(new DateTime(2015, 10, 14, 12, 0).toString("yyyy/MM/dd HH:mm"));
+
+        drawer = (NavigationView)findViewById(R.id.left_drawer);
+        drawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                Toast.makeText(getApplicationContext(), "Click sur " + menuItem.getTitle(), Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
     }
 ;
     @Override
