@@ -1,15 +1,15 @@
 <resources>
 
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#2780E3</item>
-        <item name="colorPrimaryDark">#0b54a6</item>
-        <item name="colorAccent">#6ab1ff</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="popupActivity" parent="@style/Theme.AppCompat.Light.Dialog">
-        <item name="colorPrimary">#2780E3</item>
-        <item name="colorPrimaryDark">#0b54a6</item>
-        <item name="colorAccent">#6ab1ff</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 </resources>
