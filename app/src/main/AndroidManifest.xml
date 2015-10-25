@@ -18,12 +18,12 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            android:theme="@style/popupActivity"
             android:label="@string/title_activity_login">
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            android:theme="@style/popupActivity"
             android:label="@string/title_activity_register">
         </activity>
     </application>
