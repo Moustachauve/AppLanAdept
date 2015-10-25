@@ -18,13 +18,17 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/popupActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_login"
+            android:theme="@style/popupActivity" >
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:theme="@style/popupActivity"
-            android:label="@string/title_activity_register">
+            android:label="@string/title_activity_register"
+            android:theme="@style/popupActivity" >
+        </activity>
+        <activity
+            android:name=".ListPlacesActivity"
+            android:label="@string/title_activity_list_places" >
         </activity>
     </application>
 

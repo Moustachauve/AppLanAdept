@@ -24,7 +24,7 @@ import ca.cgagnier.lanadept.services.exceptions.InvalidLoginException;
 import ca.cgagnier.lanadept.services.exceptions.UserAlreadyLoggedInException;
 
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends AppCompatActivity {
 
     private UserLoginTask mAuthTask = null;
 

@@ -1,30 +1,28 @@
 package ca.cgagnier.lanadept;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
-import ca.cgagnier.lanadept.repositories.UserRepository;
+import ca.cgagnier.lanadept.services.DevService;
 import ca.cgagnier.lanadept.services.UserService;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private final int INTENT_LIST_PLACE = 0;
     private final int INTENT_LOGIN = 1;
     private final int INTENT_REGISTER = 2;
+
+    private static boolean isFirstTime = true;
 
     TextView txtCountDownDays;
     TextView txtCountDownHours;
@@ -39,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(isFirstTime) {
+            isFirstTime = false;
+            DevService.getCurrent().ResetEverything();
+        }
 
+        getSupportActionBar().
         invalidateOptionsMenu();
 
         txtCountDownDays = (TextView)findViewById(R.id.txt_countdown_days);
@@ -78,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if (id == R.id.menu_liste_places) {
+            Intent intent = new Intent(this, ListPlacesActivity.class);
+            startActivityForResult(intent, INTENT_LIST_PLACE);
+            return true;
+        }
 
         if (id == R.id.menu_login) {
             Intent intent = new Intent(this, LoginActivity.class);

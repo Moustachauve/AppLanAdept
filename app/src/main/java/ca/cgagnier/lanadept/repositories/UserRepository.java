@@ -21,17 +21,4 @@ public class UserRepository extends GenericRepository<User> implements IUserRepo
 
         throw new NotFoundException();
     }
-
-    public UserRepository() {
-        User testUser = new User();
-
-        testUser.id = 0l;
-        testUser.email = "to@to.to";
-        testUser.password = "toto";
-        testUser.dateInscription = DateTime.now();
-        testUser.fullName = "Je test";
-        testUser.reservations = new LinkedList<>();
-
-        listRecord.add(testUser);
-    }
 }
