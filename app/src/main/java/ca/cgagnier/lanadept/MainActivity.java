@@ -1,6 +1,7 @@
 package ca.cgagnier.lanadept;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
 import android.os.Bundle;
@@ -18,10 +19,6 @@ import ca.cgagnier.lanadept.services.UserService;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final int INTENT_LIST_PLACE = 0;
-    private final int INTENT_LOGIN = 1;
-    private final int INTENT_REGISTER = 2;
-
     private static boolean isFirstTime = true;
 
     TextView txtCountDownDays;
@@ -31,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txtCountDownDate;
     Menu menu;
 
-    NavigationView drawer;
+    MainDrawer drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
             DevService.getCurrent().ResetEverything();
         }
 
-        getSupportActionBar().
-        invalidateOptionsMenu();
+        drawer = new MainDrawer(this);
 
         txtCountDownDays = (TextView)findViewById(R.id.txt_countdown_days);
         txtCountDownHours = (TextView)findViewById(R.id.txt_countdown_hours);
@@ -53,61 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         setTimer(new DateTime(2015, 10, 14, 12, 0));
         txtCountDownDate.setText(new DateTime(2015, 10, 14, 12, 0).toString("yyyy/MM/dd HH:mm"));
-
-        drawer = (NavigationView)findViewById(R.id.left_drawer);
-        drawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                Toast.makeText(getApplicationContext(), "Click sur " + menuItem.getTitle(), Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
-    }
-;
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu = menu;
-
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        updateMenuVisibility();
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.menu_liste_places) {
-            Intent intent = new Intent(this, ListPlacesActivity.class);
-            startActivityForResult(intent, INTENT_LIST_PLACE);
-            return true;
-        }
-
-        if (id == R.id.menu_login) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivityForResult(intent, INTENT_LOGIN);
-            return true;
-        }
-
-        if (id == R.id.menu_register) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivityForResult(intent, INTENT_REGISTER);
-            return true;
-        }
-
-        if(id == R.id.menu_logout) {
-            UserService.getCurrent().logout();
-            updateMenuVisibility();
-            Toast.makeText(getApplicationContext(), R.string.logout_done, Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void setTimer(DateTime startingDate) {
@@ -140,28 +81,17 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
-    private void updateMenuVisibility() {
-        MenuItem signIn = menu.findItem(R.id.menu_login);
-        MenuItem register = menu.findItem(R.id.menu_register);
-        MenuItem signOut = menu.findItem(R.id.menu_logout);
-
-        boolean isLoggedIn = UserService.getCurrent().isUserLoggedIn();
-        signIn.setVisible(!isLoggedIn);
-        register.setVisible(!isLoggedIn);
-        signOut.setVisible(isLoggedIn);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
-            case (INTENT_LOGIN) : {
+            case (MainDrawer.INTENT_LOGIN) : {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
                     Toast.makeText(getBaseContext(), R.string.login_done, Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
-            case (INTENT_REGISTER) : {
+            case (MainDrawer.INTENT_REGISTER) : {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
                     Toast.makeText(getBaseContext(), R.string.register_done, Toast.LENGTH_SHORT).show();
                 }
@@ -169,7 +99,27 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        updateMenuVisibility();
+        drawer.updateMenuVisibility();
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawer.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawer.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawer.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

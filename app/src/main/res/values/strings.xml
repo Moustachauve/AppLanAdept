@@ -2,10 +2,15 @@
     <string name="app_name">LanAdept</string>
     <string name="title_activity_list_places">Liste des places</string>
 
+    <string name="menu_home">Accueil</string>
     <string name="menu_liste_places">Liste des places</string>
     <string name="menu_login">Se connecter</string>
     <string name="menu_logout">Se déconnecter</string>
     <string name="menu_register">S\'inscrire</string>
 
     <string name="message_lan_started">Le LAN est débuté!</string>
+
+    <string name="drawer_open">Ouvrir le menu de navigation</string>
+    <string name="drawer_close">Fermer le menu de navigation</string>
+
 </resources>
