@@ -35,7 +35,7 @@ public class DevService implements IDevService {
             ReservationService.reset();
             UserService.reset();
 
-            Lan lan = LanService.getCurrent().create(DateTime.now().plusDays(10), "Cafétéria orange", "Cégep Édouard-Montpetit, 945 chemin de Chambly, Longueui");
+            Lan lan = LanService.getCurrent().create(DateTime.now().plusDays(10), "Cafétéria orange", "Cégep Édouard-Montpetit, 945 chemin de Chambly, Longueuil");
             User mainUser = UserService.getCurrent().register("to@to.to", "toto", "toto", "Testing User");
 
             for (int i = 'A'; i < 'J'; i++) {

@@ -28,7 +28,8 @@
         </activity>
         <activity
             android:name=".ListPlacesActivity"
-            android:label="@string/title_activity_list_places" >
+            android:label="@string/title_activity_list_places"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

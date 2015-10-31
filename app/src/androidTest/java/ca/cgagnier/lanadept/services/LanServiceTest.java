@@ -57,7 +57,7 @@ public class LanServiceTest extends AndroidTestCase {
         }
     }
 
-    public void testSelectLanAndGetSelectedLan() { //Lan selectedLan
+    public void testSelectLanAndGetSelectedLan() throws Exception { //Lan selectedLan
         Lan testLan = createTestingLan();
         createTestingLan();
         createTestingLan();

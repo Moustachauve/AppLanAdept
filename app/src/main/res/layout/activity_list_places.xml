@@ -11,7 +11,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.cgagnier.lanadept.ListPlacesActivity">
+    tools:context="ca.cgagnier.lanadept.ListPlacesActivity"
+    android:id="@+id/main_container">
 
     <ListView
         android:id="@+id/list_places"

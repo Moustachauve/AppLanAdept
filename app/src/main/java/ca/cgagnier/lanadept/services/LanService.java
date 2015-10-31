@@ -9,6 +9,7 @@ import java.util.List;
 import ca.cgagnier.lanadept.models.Lan;
 import ca.cgagnier.lanadept.repositories.LanRepository;
 import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
+import ca.cgagnier.lanadept.services.exceptions.NoLanException;
 import ca.cgagnier.lanadept.services.exceptions.NoLanInFutureException;
 
 public class LanService implements ILanService {
@@ -48,7 +49,20 @@ public class LanService implements ILanService {
     }
 
     @Override
-    public Lan getSelectedLan() {
+    public Lan getSelectedLan() throws NoLanException {
+        if(selectedLan == null) {
+            try {
+                selectedLan = getClosestNextLan();
+            }
+            catch (NoLanInFutureException ex) {
+                List<Lan> lans = lanRepo.getAll();
+                if(lans.size() == 0)
+                    throw new NoLanException();
+
+                selectedLan = lans.get(lans.size() - 1);
+            }
+        }
+
         return selectedLan;
     }
 

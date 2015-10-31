@@ -6,6 +6,7 @@ import java.util.List;
 
 import ca.cgagnier.lanadept.models.Lan;
 import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
+import ca.cgagnier.lanadept.services.exceptions.NoLanException;
 import ca.cgagnier.lanadept.services.exceptions.NoLanInFutureException;
 
 public interface ILanService {
@@ -25,8 +26,9 @@ public interface ILanService {
     /**
      * Get the currently selected Lan
      * @return The currently selected Lan
+     * @throws NotFoundException
      */
-    public Lan getSelectedLan();
+    public Lan getSelectedLan() throws NoLanException;
 
     /**
      * Create a new Lan and insert it in the repo
