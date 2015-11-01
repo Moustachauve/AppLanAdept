@@ -5,6 +5,8 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Mot de passe</string>
+    <string name="prompt_password_confirmation">Confirmation du mot de passe</string>
+    <string name="prompt_full_name">Nom complet</string>
 
     <string name="action_login">Se connecter</string>
     <string name="action_login_short">Connexion</string>
@@ -12,8 +14,10 @@
     <string name="action_register_short">Inscription</string>
 
     <string name="error_incorrect_password">Le mot de passe est incorrecte</string>
+    <string name="error_incorrect_password_confirmation">Le mot de passe et le mot de passe de confirmation ne correspondent pas</string>
     <string name="error_password_too_short">Le mot de passe est trop court</string>
-    <string name="error_email_invalid">Le mot de passe est trop court</string>
+    <string name="error_email_invalid">L'adresse email est invalide</string>
+    <string name="error_name_invalid">Le nom inscrit est invalide</string>
     <string name="error_field_required">Ce champ est nécéssaire</string>
 
     <string name="login_done">Vous êtes maintenant connecté.</string>

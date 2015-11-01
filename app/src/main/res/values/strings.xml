@@ -29,5 +29,5 @@
     <string name="error_place_reserved">Cette place est déjà réservée</string>
     <string name="error_place_cancel_not_owner">Vous ne pouvez pas annuler la réservation de quelqu\'un d\'autre</string>
 
-    <string name="error_already_logged_in">Vous êtes déjà connecté</string>
+    <string name="error_register_logged_in">Vous êtes déjà connecté, vous ne pouvez-donc pas vous inscrire</string>
 </resources>

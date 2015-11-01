@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
                 // Simulate network access.
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 return false;
             }
@@ -185,9 +185,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 UserService.getCurrent().login(mEmail, mPassword);
             }
-            catch (UserAlreadyLoggedInException ex) {
-
-            }
+            catch (UserAlreadyLoggedInException ex) {} //Déjà connecté, on laisse croire au User qu'il est bon et qu'il a réussi à se connecter
             catch (InvalidLoginException ex) {
                 return false;
             }

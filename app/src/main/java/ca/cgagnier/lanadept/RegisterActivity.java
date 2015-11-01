@@ -20,7 +20,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import ca.cgagnier.lanadept.services.UserService;
+import ca.cgagnier.lanadept.services.exceptions.InvalidEmailException;
 import ca.cgagnier.lanadept.services.exceptions.InvalidLoginException;
+import ca.cgagnier.lanadept.services.exceptions.InvalidNameException;
+import ca.cgagnier.lanadept.services.exceptions.InvalidPasswordConfirmationException;
+import ca.cgagnier.lanadept.services.exceptions.InvalidPasswordException;
 import ca.cgagnier.lanadept.services.exceptions.UserAlreadyLoggedInException;
 
 
@@ -29,8 +33,10 @@ public class RegisterActivity extends AppCompatActivity {
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     private EditText mPasswordView;
+    private EditText mPasswordConfirmationView;
+    private EditText mFullNameView;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -40,19 +46,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-
+        mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptRegister();
-                    return true;
-                }
-                return false;
-            }
-        });
+        mPasswordConfirmationView = (EditText) findViewById(R.id.password_confirmation);
+        mFullNameView = (EditText) findViewById(R.id.full_name);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -74,13 +71,36 @@ public class RegisterActivity extends AppCompatActivity {
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mPasswordConfirmationView.setError(null);
+        mFullNameView.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String passwordConfirmation = mPasswordConfirmationView.getText().toString();
+        String fullName = mFullNameView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
+
+        // Check if the user entered a full name.
+        if (TextUtils.isEmpty(fullName.trim())) {
+            mFullNameView.setError(getString(R.string.error_field_required));
+            focusView = mFullNameView;
+            cancel = true;
+        }
+
+        // Check if the user entered a password confirmation.
+        if (TextUtils.isEmpty(passwordConfirmation.trim())) {
+            mPasswordConfirmationView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordConfirmationView;
+            cancel = true;
+        }
+        else if(!password.equals(passwordConfirmation)) {
+            mPasswordConfirmationView.setError(getString(R.string.error_incorrect_password_confirmation));
+            focusView = mPasswordConfirmationView;
+            cancel = true;
+        }
 
         // Check if the user entered a password.
         if (TextUtils.isEmpty(password.trim())) {
@@ -114,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password, passwordConfirmation, fullName);
             mAuthTask.execute((Void) null);
         }
     }
@@ -163,10 +183,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         private final String mEmail;
         private final String mPassword;
+        private final String mPasswordConfirmation;
+        private final String mFullName;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, String passwordConfirmation, String fullName) {
             mEmail = email;
             mPassword = password;
+            mPasswordConfirmation = passwordConfirmation;
+            mFullName = fullName;
         }
 
         @Override
@@ -174,19 +198,25 @@ public class RegisterActivity extends AppCompatActivity {
 
             try {
                 // Simulate network access.
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 return false;
             }
 
             try {
-                UserService.getCurrent().login(mEmail, mPassword);
+                UserService.getCurrent().register(mEmail, mPassword, mPasswordConfirmation, mFullName);
             }
-            catch (UserAlreadyLoggedInException ex) {
-
+            catch (InvalidEmailException ex) {
+                ErrorDialog.show(getApplicationContext(), getString(R.string.error_email_invalid));
             }
-            catch (InvalidLoginException ex) {
-                return false;
+            catch (InvalidPasswordException ex) {
+                ErrorDialog.show(getApplicationContext(), getString(R.string.error_incorrect_password));
+            }
+            catch (InvalidPasswordConfirmationException ex) {
+                ErrorDialog.show(getApplicationContext(), getString(R.string.error_incorrect_password_confirmation));
+            }
+            catch (InvalidNameException ex) {
+                ErrorDialog.show(getApplicationContext(), getString(R.string.error_name_invalid));
             }
 
             return true;
