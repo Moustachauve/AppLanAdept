@@ -48,7 +48,7 @@ public class ListPlaceFragment extends ListFragment {
 
             new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.error_title)
-                    .setMessage(R.string.error_no_lan)
+                    .setMessage(R.string.error_no_lan_list_place)
                     .setPositiveButton(android.R.string.ok, null)
                     .setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override

@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
+import ca.cgagnier.lanadept.models.Lan;
 import ca.cgagnier.lanadept.services.DevService;
+import ca.cgagnier.lanadept.services.LanService;
 import ca.cgagnier.lanadept.services.UserService;
+import ca.cgagnier.lanadept.services.exceptions.NoLanException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if(isFirstTime) {
             isFirstTime = false;
             DevService.getCurrent().ResetEverything();
@@ -41,13 +45,23 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = new MainDrawer(this);
 
+        Lan currentLan = null;
+
+        try {
+            currentLan = LanService.getCurrent().getSelectedLan();
+        }
+        catch (NoLanException ex) {
+            ErrorDialog.show(this, getString(R.string.error_no_lan));
+            finish();
+        }
+
         txtCountDownDays = (TextView)findViewById(R.id.txt_countdown_days);
         txtCountDownHours = (TextView)findViewById(R.id.txt_countdown_hours);
         txtCountDownMins = (TextView)findViewById(R.id.txt_countdown_minutes);
         txtCountDownSecs = (TextView)findViewById(R.id.txt_countdown_seconds);
         txtCountDownDate = (TextView)findViewById(R.id.txt_countdown_date);
 
-        setTimer(new DateTime(2015, 10, 14, 12, 0));
+        setTimer(currentLan.startingDate);
         txtCountDownDate.setText(new DateTime(2015, 10, 14, 12, 0).toString("yyyy/MM/dd HH:mm"));
     }
 

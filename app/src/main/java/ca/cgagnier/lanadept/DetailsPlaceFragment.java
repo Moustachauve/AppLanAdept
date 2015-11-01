@@ -96,6 +96,9 @@ public class DetailsPlaceFragment extends Fragment {
                 catch (UserNotLoggedInException ex) {
                     ErrorDialog.show(getActivity(), getString(R.string.error_not_logged_in));
                 }
+                catch (NullPointerException ex) {
+                    refreshPlace();
+                }
             }
         });
 

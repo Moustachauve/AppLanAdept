@@ -14,7 +14,9 @@
     <string name="drawer_close">Fermer le menu de navigation</string>
 
     <string name="error_title">Une erreur est survenue</string>
-    <string name="error_no_lan">Il n\'y a pas de LAN. Vous ne pouvez donc pas vérifier la liste des places.</string>
+
+    <string name="error_no_lan_list_place">Il n\'y a pas de LAN. Vous ne pouvez donc pas vérifier la liste des places.</string>
+    <string name="error_no_lan">Il n\'y a pas encore de LAN pour le moment.</string>
 
     <string name="list_empty_place">Le LAN ne contient pas de place pour le moment.</string>
 
