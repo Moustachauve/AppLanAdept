@@ -12,14 +12,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ca.cgagnier.lanadept.ListPlacesActivity"
+    android:orientation="vertical"
     android:id="@+id/main_container">
 
-    <ListView
-        android:id="@+id/list_places"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    </ListView>
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="ca.cgagnier.lanadept.ListPlaceFragment"
+        android:id="@+id/fragment_list_place"></fragment>
 
 </LinearLayout>
 

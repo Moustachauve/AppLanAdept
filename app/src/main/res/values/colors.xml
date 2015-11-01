@@ -3,4 +3,10 @@
     <color name="colorPrimary">#2780E3</color>
     <color name="colorPrimaryDark">#0b54a6</color>
     <color name="colorAccent">#6ab1ff</color>
+
+    <color name="placeReserved">#D91E18</color>
+    <color name="placeFree">#00B16A</color>
+
+    <color name="item_selected">@color/colorAccent</color>
+    <color name="item_not_selected">#ffffff</color>
 </resources>

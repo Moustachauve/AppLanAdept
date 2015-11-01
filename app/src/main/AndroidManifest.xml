@@ -29,7 +29,15 @@
         <activity
             android:name=".ListPlacesActivity"
             android:label="@string/title_activity_list_places"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name=".DetailsPlaceActivity"
+            android:label="@string/list_place_name"
+            android:parentActivityName=".ListPlacesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.cgagnier.lanadept.ListPlacesActivity" />
         </activity>
     </application>
 

@@ -17,4 +17,10 @@
     <string name="error_no_lan">Il n\'y a pas de LAN. Vous ne pouvez donc pas vérifier la liste des places.</string>
 
     <string name="list_empty_place">Le LAN ne contient pas de place pour le moment.</string>
+
+    <string name="list_place_name">Place %1$s%2$s</string>
+    <string name="list_place_section">Section %1$s</string>
+
+    <string name="place_status_free">Cette place est libre</string>
+    <string name="place_status_reserved">Cette place est réservée</string>
 </resources>

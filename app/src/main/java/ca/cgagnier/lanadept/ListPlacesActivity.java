@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,39 +30,6 @@ public class ListPlacesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_places);
-
-        List<Place> placeList = new ArrayList<>();
-
-        try {
-            for(PlaceSection section : LanService.getCurrent().getSelectedLan().sections) {
-                placeList.addAll(section.placeList);
-            }
-        }
-        catch (NoLanException ex)
-        {
-
-            new AlertDialog.Builder((Context)this)
-                    .setTitle(R.string.error_title)
-                    .setMessage(R.string.error_no_lan)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivityForResult(intent, MainDrawer.INTENT_MAIN_ACTIVITY);
-                        }
-                    })
-                    .show();
-        }
-
-        PlaceAdapter adapter = new PlaceAdapter(this, placeList);
-
-        ListView listView = (ListView)findViewById(R.id.list_places);
-        listView.setAdapter(adapter);
-
-        View v = getLayoutInflater().inflate(R.layout.list_empty_place, (ViewGroup)findViewById(R.id.main_container));
-
-        listView.setEmptyView(v);
 
         drawer = new MainDrawer(this);
     }
