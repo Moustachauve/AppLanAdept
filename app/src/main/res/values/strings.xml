@@ -23,4 +23,11 @@
 
     <string name="place_status_free">Cette place est libre</string>
     <string name="place_status_reserved">Cette place est réservée</string>
+
+    <string name="error_not_logged_in">Vous devez être connecté pour faire ceci</string>
+    <string name="error_too_many_reservation">Vous ne pouvez pas réserver plus qu\'une place</string>
+    <string name="error_place_reserved">Cette place est déjà réservée</string>
+    <string name="error_place_cancel_not_owner">Vous ne pouvez pas annuler la réservation de quelqu\'un d\'autre</string>
+
+    <string name="error_already_logged_in">Vous êtes déjà connecté</string>
 </resources>

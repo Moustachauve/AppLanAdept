@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.cgagnier.lanadept.models.Place;
+import ca.cgagnier.lanadept.repositories.exceptions.NotFoundException;
 
 public class PlaceAdapter extends BaseAdapter {
 
@@ -62,5 +63,18 @@ public class PlaceAdapter extends BaseAdapter {
             placeStatus.setBackgroundResource(R.color.placeReserved);
 
         return v;
+    }
+
+    public Place getItem(Place place) {
+        for(Place currPlace : placeList) {
+            if(currPlace.id == place.id)
+                return currPlace;
+        }
+
+        throw new NotFoundException();
+    }
+
+    public void refreshList() {
+        notifyDataSetChanged();
     }
 }

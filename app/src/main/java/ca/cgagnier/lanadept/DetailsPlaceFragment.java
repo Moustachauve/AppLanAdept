@@ -11,10 +11,15 @@ import android.widget.TextView;
 
 import com.google.common.eventbus.*;
 
+import ca.cgagnier.lanadept.events.PlaceChangedEvent;
 import ca.cgagnier.lanadept.events.PlaceClickedEvent;
 import ca.cgagnier.lanadept.models.Place;
+import ca.cgagnier.lanadept.models.User;
 import ca.cgagnier.lanadept.services.PlaceService;
+import ca.cgagnier.lanadept.services.ReservationService;
 import ca.cgagnier.lanadept.services.UserService;
+import ca.cgagnier.lanadept.services.exceptions.PlaceReservedException;
+import ca.cgagnier.lanadept.services.exceptions.TooManyReservationException;
 import ca.cgagnier.lanadept.services.exceptions.UserNotLoggedInException;
 
 /**
@@ -52,7 +57,47 @@ public class DetailsPlaceFragment extends Fragment {
         lblNotConnected = (TextView)v.findViewById(R.id.place_not_logged_in);
 
         btnReserve = (Button)v.findViewById(R.id.btn_place_reserve);
+        btnReserve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    User loggedInUser = UserService.getCurrent().getLoggedInUser();
+                    ReservationService.getCurrent().reserve(loggedInUser, currentPlace);
+                    refreshPlace();
+                    EventBus.bus.post(new PlaceChangedEvent(currentPlace));
+                }
+                catch (UserNotLoggedInException ex) {
+                    ErrorDialog.show(getActivity(), getString(R.string.error_not_logged_in));
+                }
+                catch (TooManyReservationException ex) {
+                    ErrorDialog.show(getActivity(), getString(R.string.error_too_many_reservation));
+                }
+                catch (PlaceReservedException ex) {
+                    ErrorDialog.show(getActivity(), getString(R.string.error_place_reserved));
+                }
+            }
+        });
+
         btnCancel = (Button)v.findViewById(R.id.btn_place_cancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    User loggedInUser = UserService.getCurrent().getLoggedInUser();
+                    if(currentPlace.reservation.user.id != loggedInUser.id) {
+                        ErrorDialog.show(getActivity(), getString(R.string.error_place_cancel_not_owner));
+                    }
+                    else {
+                        ReservationService.getCurrent().cancel(currentPlace.reservation);
+                        refreshPlace();
+                        EventBus.bus.post(new PlaceChangedEvent(currentPlace));
+                    }
+                }
+                catch (UserNotLoggedInException ex) {
+                    ErrorDialog.show(getActivity(), getString(R.string.error_not_logged_in));
+                }
+            }
+        });
 
         mainLayout.setVisibility(View.INVISIBLE);
 

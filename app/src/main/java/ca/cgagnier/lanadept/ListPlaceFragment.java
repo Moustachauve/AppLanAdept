@@ -13,9 +13,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.common.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.cgagnier.lanadept.events.PlaceChangedEvent;
 import ca.cgagnier.lanadept.events.PlaceClickedEvent;
 import ca.cgagnier.lanadept.models.Place;
 import ca.cgagnier.lanadept.models.PlaceSection;
@@ -84,6 +87,18 @@ public class ListPlaceFragment extends ListFragment {
         }
     }
 
+    @Subscribe
+    public void placeChanged(PlaceChangedEvent e) {
+        Place place = adapter.getItem(e.place);
+
+        place.reservation = e.place.reservation;
+        place.numero = e.place.numero;
+        place.placeSection = e.place.placeSection;
+
+        adapter.refreshList();
+    }
+
+
     @Override
     public void onPause() {
         EventBus.bus.unregister(this);
@@ -93,6 +108,7 @@ public class ListPlaceFragment extends ListFragment {
     @Override
     public void onResume() {
         EventBus.bus.register(this);
+        adapter.refreshList();
         super.onResume();
     }
 }
