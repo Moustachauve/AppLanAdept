@@ -1,5 +1,6 @@
 package ca.cgagnier.lanadept;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,16 +21,20 @@ import java.util.List;
 import ca.cgagnier.lanadept.models.Place;
 import ca.cgagnier.lanadept.models.PlaceSection;
 import ca.cgagnier.lanadept.services.LanService;
+import ca.cgagnier.lanadept.services.PlaceService;
 import ca.cgagnier.lanadept.services.exceptions.NoLanException;
 
 public class ListPlacesActivity extends AppCompatActivity {
 
     private MainDrawer drawer;
+    private DetailsPlaceFragment detailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_places);
+
+        detailsFragment = (DetailsPlaceFragment)getFragmentManager().findFragmentById(R.id.fragment_detail_place);
 
         drawer = new MainDrawer(this);
     }
@@ -62,6 +67,10 @@ public class ListPlacesActivity extends AppCompatActivity {
             case (MainDrawer.INTENT_LOGIN) : {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
                     Toast.makeText(getBaseContext(), R.string.login_done, Toast.LENGTH_SHORT).show();
+
+                    if(detailsFragment != null) {
+                        detailsFragment.refreshPlace();
+                    }
                 }
                 break;
             }
