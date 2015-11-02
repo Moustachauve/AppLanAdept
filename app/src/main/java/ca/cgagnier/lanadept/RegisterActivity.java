@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         mPasswordConfirmationView = (EditText) findViewById(R.id.password_confirmation);
         mFullNameView = (EditText) findViewById(R.id.full_name);
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        final Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +61,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        mFullNameView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    attemptRegister();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
     }
 
     public void attemptRegister() {

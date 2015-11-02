@@ -33,8 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_login_short"
+                android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"/>
@@ -44,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
-                android:imeOptions="actionUnspecified"
+                android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"/>
@@ -54,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password_confirmation"
-                android:imeOptions="actionUnspecified"
+                android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"/>
@@ -64,8 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_full_name"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
+                android:imeOptions="actionDone"
+                android:inputType="textPersonName"
                 android:maxLines="1"
                 android:singleLine="true"/>
 

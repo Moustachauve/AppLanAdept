@@ -12,6 +12,7 @@
     <string name="action_login_short">Connexion</string>
     <string name="action_register">S\'inscrire</string>
     <string name="action_register_short">Inscription</string>
+    <string name="action_next">Suivant</string>
 
     <string name="error_incorrect_password">Le mot de passe est incorrecte</string>
     <string name="error_incorrect_password_confirmation">Le mot de passe et le mot de passe de confirmation ne correspondent pas</string>
