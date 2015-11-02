@@ -16,7 +16,7 @@
 
     <string name="error_incorrect_password">Le mot de passe est incorrecte</string>
     <string name="error_incorrect_password_confirmation">Le mot de passe et le mot de passe de confirmation ne correspondent pas</string>
-    <string name="error_password_too_short">Le mot de passe est trop court</string>
+    <string name="error_password_too_short">Le mot de passe est trop court (Min. 4 caractères)</string>
     <string name="error_email_invalid">L\'adresse email est invalide</string>
     <string name="error_name_invalid">Le nom inscrit est invalide</string>
     <string name="error_field_required">Ce champ est nécéssaire</string>
